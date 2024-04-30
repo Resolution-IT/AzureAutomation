@@ -49,6 +49,7 @@ try {
 
 # Stage 3: Extract ODT
 try {
+cd "$downloadPath"
     .\officedeploymenttool_17531-20046.exe /quiet /norestart /extract:C:\resolution\M365
     Write-Output "Extract completed to $downloadPath"
 } catch {
