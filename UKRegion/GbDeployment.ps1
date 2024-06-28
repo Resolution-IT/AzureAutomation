@@ -2,7 +2,7 @@
 
 #variables
 $regionalsettingsURL = "https://raw.githubusercontent.com/Resolution-IT/AzureAutomation/main/UKRegion/GBRegion.xml"
-$RegionalSettings = "C:\UKRegion.xml"
+$RegionalSettings = "C:\GBRegion.xml"
 
 
 #downdload regional settings file
