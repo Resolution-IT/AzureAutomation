@@ -19,7 +19,3 @@ Set-WinUserLanguageList -LanguageList en-GB -Force
 Set-Culture -CultureInfo en-GB
 Set-WinHomeLocation -GeoId 242
 Set-TimeZone -Name "GMT Standard Time"
-
-# restart virtual machine to apply regional settings to current user. You could also do a logoff and login.
-Start-sleep -Seconds 40
-Restart-Computer
