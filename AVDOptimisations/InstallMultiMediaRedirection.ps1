@@ -26,31 +26,31 @@ $downloadPath = "C:\Resolution\MultiMediaRedirection"
 
 # Use Invoke-WebRequest to download the file
 try {
-    Write-Output "Starting download of Remote Desktop WebRTC Redirector Service..."
+    Write-Output "Starting download of VC redist..."
     $response = Invoke-WebRequest -Uri $downloadUrl -Method Get -OutFile "$downloadPath\VC_redist.x64.exe"
     Write-Output "Download completed and saved to $downloadPath\VC_redist.x64.exe"
 } catch {
     Write-Output "An error occurred during download: $_"
 }
 
-# Stage 4: Silently install the downloaded MSI file
+# Stage 4: Silently install VCRedist
 $installerPath = "$downloadPath\VC_redist.x64.exe"
 
 # Check if the installer file exists
 if (Test-Path $installerPath) {
+
+try {
 # Start the installation process silently
+Write-Output "Starting install of vc_redist"
 Start-Process -FilePath $installerPath -ArgumentList "/quiet", "/norestart" -Wait
 
-# Check the exit code to determine success/failure
-$exitCode = $LASTEXITCODE
-if ($exitCode -eq 0) {
-Write-Host "Installation completed successfully."
+    } catch {
+        Write-Output "An error occurred during installation of vc_redist: $_"
+    }
 } else {
-Write-Host "Installation failed with exit code: $exitCode"
+    Write-Output "Installer file not found for vc_redist at $installerPath"
 }
-} else {
-Write-Host "Installer file not found at: $installerPath"
-}
+
 
 
 # Stage 5: Download MultiMedia Redirection MSI
@@ -60,7 +60,7 @@ $mmrPath = "$downloadPath\MsMMRHostInstaller.msi"
 try {
     Write-Output "Starting download of MultiMedia Redirection MSI..."
     Invoke-WebRequest -Uri $mmrUrl -OutFile $mmrPath
-    Write-Output "TeamsBootstrapper.exe downloaded successfully to $mmrPath."
+    Write-Output "MultiMedia Redirection MSI downloaded successfully to $mmrPath."
 } catch {
     Write-Output "An error occurred during the download of MultiMedia Redirection MSI...: $_"
 }
