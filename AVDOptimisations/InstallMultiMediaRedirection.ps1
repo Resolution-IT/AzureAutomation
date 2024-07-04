@@ -20,7 +20,7 @@ if (-not (Test-Path $directoryPath)) {
     Write-Output "Directory already exists at $directoryPath."
 }
 
-# Stage 3: Download the latest version of the Remote Desktop WebRTC Redirector Service
+# Stage 3: Download the latest version of the Visual C++ (VC_Redist)
 $downloadUrl = "https://aka.ms/vs/17/release/vc_redist.x64.exe"
 $downloadPath = "C:\Resolution\MultiMediaRedirection"
 
@@ -50,8 +50,6 @@ Start-Process -FilePath $installerPath -ArgumentList "/quiet", "/norestart" -Wai
 } else {
     Write-Output "Installer file not found for vc_redist at $installerPath"
 }
-
-
 
 # Stage 5: Download MultiMedia Redirection MSI
 $mmrUrl = "https://aka.ms/avdmmr/msi"
