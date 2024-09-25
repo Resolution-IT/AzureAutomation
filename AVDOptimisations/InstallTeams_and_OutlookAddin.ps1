@@ -150,18 +150,18 @@ try {
 # Stage 9: Install Teams Outlook Add-in
 
 # Define the path to the installer and the log file
-$addinInstallerPath = "C:\Path\To\MicrosoftTeamsMeetingAddinInstaller.msi"  # Adjust the path accordingly
+$addinInstaller = "MicrosoftTeamsMeetingAddinInstaller.msi"  # Adjust the path accordingly
 $logFilePath = "C:\temp\NewTeams-OutlookPlugin-Install.log"
 
 # Check if the installer file exists before attempting installation
-if (-not (Test-Path $addinInstallerPath)) {
+if (-not (Test-Path $addinInstaller)) {
     Write-Output "The installer file was not found at $addinInstallerPath. Please check the path."
 } else {
     try {
         Write-Output "Starting installation of the Teams Outlook Add-in..."
         
         # Run the msiexec command to install the add-in silently with logging
-        Start-Process -FilePath "msiexec.exe" -ArgumentList "/i `"$addinInstallerPath`" ALLUSERS=1 /qn /l*v `"$logFilePath`"" -Wait -NoNewWindow
+        Start-Process -FilePath 'msiexec.exe' -ArgumentList "/i `"$addinInstaller`" ALLUSERS=1 /quiet /norestart" -Wait -NoNewWindow
         
         Write-Output "Teams Outlook Add-in installation completed successfully."
     } catch {
