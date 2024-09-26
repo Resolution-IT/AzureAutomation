@@ -149,22 +149,37 @@ try {
 
 # Stage 9: Install Teams Outlook Add-in
 
-# Define the path to the installer and the log file
+# Get Version of currently installed new Teams Package
+$NewTeamsPackageVersion = (Get-AppxPackage -Name MSTeams -AllUsers).Version
+
+if (-not $NewTeamsPackageVersion) {
+    Write-Host "New Teams Package not found. Please install new Teams from https://aka.ms/GetTeams."
+    exit 1
+}
+
+Write-Host "Found new Teams Version: $NewTeamsPackageVersion"
+
+# Define the path to the installer and log file
 $addinInstaller = "MicrosoftTeamsMeetingAddinInstaller.msi"  # Adjust the path accordingly
 $logFilePath = "C:\temp\NewTeams-OutlookPlugin-Install.log"
 
+# Set the TargetDir based on the dynamically retrieved version
+$targetDir = "C:\Program Files (x86)\Microsoft\TeamsMeetingAddin\$NewTeamsPackageVersion"
+
 # Check if the installer file exists before attempting installation
 if (-not (Test-Path $addinInstaller)) {
-    Write-Output "The installer file was not found at $addinInstallerPath. Please check the path."
+    Write-Output "The installer file was not found at $addinInstaller. Please check the path."
 } else {
     try {
         Write-Output "Starting installation of the Teams Outlook Add-in..."
-        
-        # Run the msiexec command to install the add-in silently with logging
-        Start-Process -FilePath 'msiexec.exe' -ArgumentList "/i `"$addinInstaller`" ALLUSERS=1 /quiet /norestart" -Wait -NoNewWindow
-        
+
+        # Run the msiexec command to install the add-in silently with logging and specify the target directory with version
+        Start-Process -FilePath 'msiexec.exe' -ArgumentList "/i `"$addinInstaller`" ALLUSERS=1 /quiet /norestart TARGETDIR=`"$targetDir`"" -Wait -NoNewWindow
+
         Write-Output "Teams Outlook Add-in installation completed successfully."
     } catch {
         Write-Output "An error occurred during the installation of the Teams Outlook Add-in: $_"
     }
 }
+
+
