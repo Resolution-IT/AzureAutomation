@@ -1,5 +1,5 @@
 # Define log file path
-$LogFile = "C:\deployment_log.txt"
+$LogFile = "C:\DetDateGFormat_log.txt"
 
 # Function to write logs
 function Write-Log {
