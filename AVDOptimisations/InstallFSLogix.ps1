@@ -3,7 +3,7 @@
 PowerShell to install FSLogix on Multi-user Azure virtual desktop session hosts.
 
 .NOTES
-Version: 1.1
+Version: 1.2
 Author: Oliver Le Prevost
 Creation Date: 15/04/2024
 #>
